@@ -1,0 +1,13 @@
+{
+  "name": "tariffsapi",
+  "version": "1.0.0",
+  "description": "US import duty rates by HTS code and origin from Tariffs API (tariffsapi.com).",
+  "mcpServers": {
+    "tariffs-api": {
+      "httpUrl": "https://tariffsapi.com/api/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer $TARIFFSAPI_API_KEY"
+      }
+    }
+  }
+}

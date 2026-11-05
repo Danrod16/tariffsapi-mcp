@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.tariffsapi/tariffs",
+  "title": "Tariffs API",
+  "description": "The tariff and HTS source for your AI agents: US import duties by HTS code and origin.",
+  "version": "1.0.0",
+  "websiteUrl": "https://tariffsapi.com/api-documentation#mcp-integration",
+  "repository": {
+    "url": "https://github.com/Danrod16/tariffsapi-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://tariffsapi.com/api/v1/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer YOUR_TARIFFSAPI_KEY (capital B). Developer plan or higher: https://tariffsapi.com/pricing",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://tariffsapi.com/icon.svg",
+      "mimeType": "image/svg+xml"
+    }
+  ]
+}

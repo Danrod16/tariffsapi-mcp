@@ -1,0 +1,56 @@
+{
+  "name": "TariffsAPI agent (MCP)",
+  "nodes": [
+    {
+      "parameters": { "options": {} },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [0, 0],
+      "webhookId": "00000000-0000-4000-8000-000000000000"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Use the TariffsAPI tools for US tariff and HTS questions. Only state rates returned by the tools, with the HTS code, origin and date used. TariffsAPI does not classify products."
+        }
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": { "model": { "__rl": true, "mode": "list", "value": "gpt-4.1-mini" }, "options": {} },
+      "id": "a1b2c3d4-0003-4000-8000-000000000003",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [160, 220],
+      "credentials": { "openAiApi": { "id": "REPLACE_ME", "name": "OpenAI account" } }
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://tariffsapi.com/api/v1/mcp",
+        "serverTransport": "httpStreamable",
+        "authentication": "bearerAuth",
+        "include": "all"
+      },
+      "id": "a1b2c3d4-0004-4000-8000-000000000004",
+      "name": "TariffsAPI MCP",
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [360, 220],
+      "credentials": { "httpBearerAuth": { "id": "REPLACE_ME", "name": "TariffsAPI" } }
+    }
+  ],
+  "connections": {
+    "When chat message received": { "main": [[{ "node": "AI Agent", "type": "main", "index": 0 }]] },
+    "OpenAI Chat Model": { "ai_languageModel": [[{ "node": "AI Agent", "type": "ai_languageModel", "index": 0 }]] },
+    "TariffsAPI MCP": { "ai_tool": [[{ "node": "AI Agent", "type": "ai_tool", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}
